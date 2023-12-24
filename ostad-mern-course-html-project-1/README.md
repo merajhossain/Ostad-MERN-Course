@@ -1,4 +1,4 @@
-<h1 align="center">HTML and CSS Practice Project</h1>
+<h1 align="left">HTML and CSS Practice Project</h1>
 <p align="left"> Tools </p>
 
 - HTML5
