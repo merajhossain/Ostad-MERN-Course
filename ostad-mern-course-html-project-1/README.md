@@ -8,3 +8,6 @@ This is a simple HTML and CSS project with mobile responsive creating for practi
  -HTML5 <br />
  -CSS3 <br />
  -SCSS <br />
+
+<img alt="" src="assets/images/landing-page.jpg" />
+
