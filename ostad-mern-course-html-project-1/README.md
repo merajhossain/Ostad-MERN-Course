@@ -1,10 +1,10 @@
-<h1 align="left">HTML and CSS Practice Project</h1>
-<p align="left"> Tools: </p>
-<hr />
-- HTML5
+# HTML and CSS Practice Project
 
-- CSS3
+#Overview
 
-- SCSS
+This is a simple HTML and CSS project with mobile responsive creating for practicing.
 
-- Mobile Responsive
+#Tools
+ -HTML5
+ -CSS3
+ -SCSS
