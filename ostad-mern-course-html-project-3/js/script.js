@@ -16,15 +16,16 @@ clockCalculation = () => {
     $('.hour').css('transform', 'rotate('+ hourHand +'deg)');
     $('.minute').css('transform', 'rotate('+ minuteHand +'deg)');
     $('.second').css('transform', 'rotate('+ secondHand +'deg)');
+    $('.hourNow').html(hour % 12 || 12);
     $('.minNow').html(minute);
-    $('.hourNow').html(hour);
-    $('.secNow').html(second);
+    $('.secNow').html(second > 9 ? second : '0'+second);
 }
 
 dateGenerate = () => {
     let date = new Date();
-    $('.date').html(date.getDay());
-    $('.month').html(date.getMonth() + 1);
+    $('.date').html(date.getDay() > 9 ? date.getDay() : '0'+date.getDay());
+    const formattedDay = (date.getDate() < 10 ? '0' : '') + date.getDate();
+    $('.month').html(formattedDay);
     $('.year').html(date.getFullYear());
 }
 
