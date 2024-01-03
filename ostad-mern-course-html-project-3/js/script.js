@@ -24,16 +24,13 @@ clockCalculation = () => {
 dateGenerate = () => {
     let date = new Date();
     $('.date').html(date.getDay() > 9 ? date.getDay() : '0'+date.getDay());
-    const formattedDay = (date.getDate() < 10 ? '0' : '') + date.getDate();
-    $('.month').html(formattedDay);
+    const formattedMonth = (date.getMonth() < 10 ? '0' : '') + (date.getMonth() + 1);
+    $('.month').html(formattedMonth);
     $('.year').html(date.getFullYear());
 }
 
-setInterval(() => {
-    dateGenerate();
-}, 86400);
-
 //call function every one second
 setInterval(() => {
+    dateGenerate();
     clockCalculation();
 }, 100);
