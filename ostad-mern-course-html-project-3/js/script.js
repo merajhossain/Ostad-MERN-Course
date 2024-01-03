@@ -32,17 +32,22 @@ dateGenerate = () => {
   $(".year").html(date.getFullYear());
 };
 
-//call function every one second
-setInterval(() => {
-  dateGenerate();
-  clockCalculation();
-}, 100);
-
-
 $(document).ready(function () {
-    $(document).ready(function() {
-        var audio = $("#myAudio")[0];
-        audio.autoplay = true;
-        audio.load();
-    });
+  Swal.fire({
+    title: "Are you want to hear clock sound?",
+    showCancelButton: true,
+    confirmButtonText: "Yes",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      var audio = $("#myAudio")[0];
+      audio.autoplay = true;
+      audio.load();
+    }
+  });
+
+  //call function every one second
+  setInterval(() => {
+    dateGenerate();
+    clockCalculation();
+  }, 100);
 });
