@@ -143,3 +143,9 @@
   .day {
       top: 200px;
   }
+  #myAudio{
+   position: fixed;
+   left: 0;
+   top: 0;
+   visibility: hidden; 
+  }
