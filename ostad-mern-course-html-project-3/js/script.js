@@ -25,7 +25,7 @@ clockCalculation = () => {
 
 dateGenerate = () => {
   let date = new Date();
-  $(".date").html(date.getDay() > 9 ? date.getDay() : "0" + date.getDay());
+  $(".date").html(date.getDate() > 9 ? date.getDate() : "0" + date.getDate());
   const formattedMonth =
     (date.getMonth() < 10 ? "0" : "") + (date.getMonth() + 1);
   $(".month").html(formattedMonth);
@@ -44,10 +44,10 @@ $(document).ready(function () {
       audio.load();
     }
   });
-
+  
+  dateGenerate();
   //call function every one second
   setInterval(() => {
-    dateGenerate();
     clockCalculation();
   }, 100);
 });
