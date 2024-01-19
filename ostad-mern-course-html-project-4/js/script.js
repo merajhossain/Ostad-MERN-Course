@@ -46,12 +46,14 @@ const createFormBlock = () => {
     cardTitle.innerHTML = "Registration Form";
     cardBody.append(cardTitle);
     let formEle = document.createElement('form');
+    formEle.setAttribute('onsubmit', 'event.preventDefault(); submitForm(event);')
     cardBody.append(formEle);
     
     let inputFieldData = [
-        {"label" : "Name", "type" : "text", "className" : "form-control", "id" : "uName", "name" : "uName", "required" : "true"},
-        {"label" : "Email", "type" : "email", "className" : "form-control", "id" : "uEmail", "name" : "uEmail", "required" : "true"},
-        {"label" : "Date of Birth", "type" : "date", "className" : "form-control", "id" : "uDob", "name" : "uDob", "required" : "true"},
+        {"label" : "Name", "type" : "text", "className" : "form-control", "id" : "name", "name" : "name", "required" : "true"},
+        {"label" : "Email", "type" : "email", "className" : "form-control", "id" : "email", "name" : "email", "required" : "true"},
+        {"label" : "Date of Birth", "type" : "date", "className" : "form-control", "id" : "dob", "name" : "dob", "required" : "true"},
+        // {"label" : "Profile Image", "type" : "file", "className" : "form-control", "id" : "profileImage", "name" : "profileImage", "required" : "false"},
     ]
 
     inputFieldData.map((item) => {
@@ -76,13 +78,14 @@ const createFormBlock = () => {
     let selectGender = createSelectMenu(genderSelectFieldData);
     formEle.append(selectGender);
     
-    let submitButton = createButtom('submitBtn', 'primary', 'submit');
+    let submitButton = createButtom('submitBtn', 'submit', 'submit', 'primary');
     formEle.append(submitButton);
 }
 
 const createSelectMenu = (fieldData = []) => {
     let selectFormCreate = document.createElement('select');
     selectFormCreate.setAttribute("id", "selectGender");
+    selectFormCreate.setAttribute("name", "gender");
     selectFormCreate.classList.add('form-control');
     fieldData.map((item, index) => {
         let option = document.createElement('option');
@@ -100,11 +103,11 @@ const createSelectMenu = (fieldData = []) => {
     return div;
 }
 
-const createButtom = (selector, btnType, btnText) => {
+const createButtom = (selector, btnType, btnText, btnColor) => {
     let btn = document.createElement('button');
-    btn.classList.add('btn', 'btn-'+btnType, selector, 'float-end', 'mt-2');
+    btn.classList.add('btn', 'btn-'+btnColor, selector, 'float-end', 'mt-2');
     btn.innerHTML = btnText;
-    btn.setAttribute("type", "button");
+    btn.setAttribute("type", btnType);
     return btn;
 } 
 
@@ -128,6 +131,8 @@ const createTable = (tableHead, tableData) => {
     table.setAttribute('id', 'datatable');
     const tHead = createThead(tableHead);
     table.append(tHead);
+    const tableRow = createTableRow(tableData);
+    table.append(tableRow);
     return table;
 }
 
@@ -147,6 +152,22 @@ const createTr = () => {
     return tr;
 }
 
+const createTd = (data) => {
+    let tr = createTr();
+    const objKey = Object.keys(data);
+    objKey.map((item, index) => {
+        td = document.createElement('td');
+        if (item == 'actionBtn') {
+            td.append(data[item]);  
+            td.classList.add('text-center');          
+        } else {
+            td.innerText = data[item];
+        }
+        tr.append(td);
+    });
+    return tr;
+}
+
 const createTh = (item, index) => {
     const th = document.createElement('th');
     th.innerText = item;
@@ -154,19 +175,38 @@ const createTh = (item, index) => {
     return th;
 }
 
+const createTableRow = (tableData) => {
+    const tableBody = document.createElement('tbody');
+    tableData.map((item, index) => {
+        let tr = createTd(item); 
+        tableBody.append(tr);
+    });
+    return tableBody;
+}
+
+const submitForm = (event) => {
+    const data = new FormData(event.target);
+    let editBtn = createButtom('editBtn', 'button', 'Edit', 'primary');
+    let deleteBtn = createButtom('delBtn', 'button', 'Delete', 'danger');
+    let groupBtn = creatediv('btn-group', 'text-center');
+    groupBtn.append(editBtn);
+    groupBtn.append(deleteBtn);
+    let dataObject = {};
+    for (const [key,value] of data) {
+        dataObject[key] = value;
+    }
+    dataObject.actionBtn = groupBtn;
+
+    let trWithData = createTd(dataObject);
+    const table = document.querySelector('tbody');
+    table.append(trWithData);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     createNavbar();
     createFormBlock();
-    const tableHead = ["#", "Name", "Email", "Date of Birth", "Gender", "Action"];
-    const tableData = [
-        {name : 'hossain', email : 'hossain@gmail.com', dob : '29/1/1991', gender : 'male'},
-        {name : 'hossain', email : 'hossain@gmail.com', dob : '29/1/1991', gender : 'male'},
-        {name : 'hossain', email : 'hossain@gmail.com', dob : '29/1/1991', gender : 'male'},
-        {name : 'hossain', email : 'hossain@gmail.com', dob : '29/1/1991', gender : 'male'},
-        {name : 'hossain', email : 'hossain@gmail.com', dob : '29/1/1991', gender : 'male'},
-        {name : 'hossain', email : 'hossain@gmail.com', dob : '29/1/1991', gender : 'male'},
-    ]
-    createTableBlock(tableHead, tableData);
+    const tableHead = ["Name", "Email", "Date of Birth", "Gender"  , "Action"];
+    createTableBlock(tableHead);
 });
 
 
